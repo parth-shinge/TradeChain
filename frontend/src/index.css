@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #0D1B2A;
+  --color-teal: #028090;
+  --color-mint: #02C39A;
+  --color-cold-blue: #3B82F6;
+  --color-danger: #E24B4A;
+  --color-warning: #EF9F27;
+  --color-light: #F8FAFC;
+}
+
+body {
+  @apply bg-light text-navy;
+}

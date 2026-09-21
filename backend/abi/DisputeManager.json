@@ -1,0 +1,233 @@
+﻿[
+    {
+        "inputs":  [
+                       {
+                           "internalType":  "address",
+                           "name":  "_userRegistryAddress",
+                           "type":  "address"
+                       }
+                   ],
+        "stateMutability":  "nonpayable",
+        "type":  "constructor"
+    },
+    {
+        "anonymous":  false,
+        "inputs":  [
+                       {
+                           "indexed":  true,
+                           "internalType":  "uint256",
+                           "name":  "disputeId",
+                           "type":  "uint256"
+                       },
+                       {
+                           "indexed":  false,
+                           "internalType":  "string",
+                           "name":  "orderCode",
+                           "type":  "string"
+                       },
+                       {
+                           "indexed":  false,
+                           "internalType":  "string",
+                           "name":  "reason",
+                           "type":  "string"
+                       }
+                   ],
+        "name":  "DisputeRaised",
+        "type":  "event"
+    },
+    {
+        "anonymous":  false,
+        "inputs":  [
+                       {
+                           "indexed":  true,
+                           "internalType":  "uint256",
+                           "name":  "disputeId",
+                           "type":  "uint256"
+                       }
+                   ],
+        "name":  "DisputeRejected",
+        "type":  "event"
+    },
+    {
+        "anonymous":  false,
+        "inputs":  [
+                       {
+                           "indexed":  true,
+                           "internalType":  "uint256",
+                           "name":  "disputeId",
+                           "type":  "uint256"
+                       }
+                   ],
+        "name":  "DisputeResolved",
+        "type":  "event"
+    },
+    {
+        "inputs":  [
+                       {
+                           "internalType":  "uint256",
+                           "name":  "_disputeId",
+                           "type":  "uint256"
+                       }
+                   ],
+        "name":  "getDispute",
+        "outputs":  [
+                        {
+                            "components":  [
+                                               {
+                                                   "internalType":  "uint256",
+                                                   "name":  "disputeId",
+                                                   "type":  "uint256"
+                                               },
+                                               {
+                                                   "internalType":  "string",
+                                                   "name":  "orderCode",
+                                                   "type":  "string"
+                                               },
+                                               {
+                                                   "internalType":  "address",
+                                                   "name":  "raisedBy",
+                                                   "type":  "address"
+                                               },
+                                               {
+                                                   "internalType":  "string",
+                                                   "name":  "reason",
+                                                   "type":  "string"
+                                               },
+                                               {
+                                                   "internalType":  "string",
+                                                   "name":  "evidenceIpfsHash",
+                                                   "type":  "string"
+                                               },
+                                               {
+                                                   "internalType":  "enum DisputeManager.DisputeStatus",
+                                                   "name":  "status",
+                                                   "type":  "uint8"
+                                               },
+                                               {
+                                                   "internalType":  "string",
+                                                   "name":  "resolution",
+                                                   "type":  "string"
+                                               },
+                                               {
+                                                   "internalType":  "uint256",
+                                                   "name":  "createdAt",
+                                                   "type":  "uint256"
+                                               },
+                                               {
+                                                   "internalType":  "uint256",
+                                                   "name":  "resolvedAt",
+                                                   "type":  "uint256"
+                                               }
+                                           ],
+                            "internalType":  "struct DisputeManager.Dispute",
+                            "name":  "",
+                            "type":  "tuple"
+                        }
+                    ],
+        "stateMutability":  "view",
+        "type":  "function"
+    },
+    {
+        "inputs":  [
+                       {
+                           "internalType":  "string",
+                           "name":  "_orderCode",
+                           "type":  "string"
+                       }
+                   ],
+        "name":  "getDisputesByOrder",
+        "outputs":  [
+                        {
+                            "internalType":  "uint256[]",
+                            "name":  "",
+                            "type":  "uint256[]"
+                        }
+                    ],
+        "stateMutability":  "view",
+        "type":  "function"
+    },
+    {
+        "inputs":  [
+                       {
+                           "internalType":  "string",
+                           "name":  "_orderCode",
+                           "type":  "string"
+                       },
+                       {
+                           "internalType":  "string",
+                           "name":  "_reason",
+                           "type":  "string"
+                       },
+                       {
+                           "internalType":  "string",
+                           "name":  "_evidenceIpfsHash",
+                           "type":  "string"
+                       }
+                   ],
+        "name":  "raiseDispute",
+        "outputs":  [
+                        {
+                            "internalType":  "uint256",
+                            "name":  "",
+                            "type":  "uint256"
+                        }
+                    ],
+        "stateMutability":  "nonpayable",
+        "type":  "function"
+    },
+    {
+        "inputs":  [
+                       {
+                           "internalType":  "uint256",
+                           "name":  "_disputeId",
+                           "type":  "uint256"
+                       },
+                       {
+                           "internalType":  "string",
+                           "name":  "_reason",
+                           "type":  "string"
+                       }
+                   ],
+        "name":  "rejectDispute",
+        "outputs":  [
+
+                    ],
+        "stateMutability":  "nonpayable",
+        "type":  "function"
+    },
+    {
+        "inputs":  [
+                       {
+                           "internalType":  "uint256",
+                           "name":  "_disputeId",
+                           "type":  "uint256"
+                       },
+                       {
+                           "internalType":  "string",
+                           "name":  "_resolution",
+                           "type":  "string"
+                       }
+                   ],
+        "name":  "resolveDispute",
+        "outputs":  [
+
+                    ],
+        "stateMutability":  "nonpayable",
+        "type":  "function"
+    },
+    {
+        "inputs":  [
+
+                   ],
+        "name":  "userRegistry",
+        "outputs":  [
+                        {
+                            "internalType":  "contract UserRegistry",
+                            "name":  "",
+                            "type":  "address"
+                        }
+                    ],
+        "stateMutability":  "view",
+        "type":  "function"
+    }
+]

@@ -1,0 +1,267 @@
+﻿[
+    {
+        "inputs":  [
+                       {
+                           "internalType":  "address",
+                           "name":  "_userRegistryAddress",
+                           "type":  "address"
+                       }
+                   ],
+        "stateMutability":  "nonpayable",
+        "type":  "constructor"
+    },
+    {
+        "anonymous":  false,
+        "inputs":  [
+                       {
+                           "indexed":  true,
+                           "internalType":  "string",
+                           "name":  "orderCode",
+                           "type":  "string"
+                       },
+                       {
+                           "indexed":  false,
+                           "internalType":  "int16",
+                           "name":  "tempRecorded",
+                           "type":  "int16"
+                       },
+                       {
+                           "indexed":  false,
+                           "internalType":  "int16",
+                           "name":  "threshold",
+                           "type":  "int16"
+                       }
+                   ],
+        "name":  "ColdChainBreak",
+        "type":  "event"
+    },
+    {
+        "anonymous":  false,
+        "inputs":  [
+                       {
+                           "indexed":  true,
+                           "internalType":  "string",
+                           "name":  "orderCode",
+                           "type":  "string"
+                       },
+                       {
+                           "indexed":  false,
+                           "internalType":  "bool",
+                           "name":  "hasDispute",
+                           "type":  "bool"
+                       }
+                   ],
+        "name":  "DeliveryConfirmed",
+        "type":  "event"
+    },
+    {
+        "anonymous":  false,
+        "inputs":  [
+                       {
+                           "indexed":  true,
+                           "internalType":  "string",
+                           "name":  "orderCode",
+                           "type":  "string"
+                       },
+                       {
+                           "indexed":  false,
+                           "internalType":  "string",
+                           "name":  "fromSAP",
+                           "type":  "string"
+                       },
+                       {
+                           "indexed":  false,
+                           "internalType":  "string",
+                           "name":  "toSAP",
+                           "type":  "string"
+                       }
+                   ],
+        "name":  "OrderCreated",
+        "type":  "event"
+    },
+    {
+        "inputs":  [
+                       {
+                           "internalType":  "string",
+                           "name":  "_orderCode",
+                           "type":  "string"
+                       },
+                       {
+                           "internalType":  "bytes32",
+                           "name":  "_receivedItemsHash",
+                           "type":  "bytes32"
+                       },
+                       {
+                           "internalType":  "int16",
+                           "name":  "_temperatureAtReceipt",
+                           "type":  "int16"
+                       }
+                   ],
+        "name":  "confirmDelivery",
+        "outputs":  [
+
+                    ],
+        "stateMutability":  "nonpayable",
+        "type":  "function"
+    },
+    {
+        "inputs":  [
+                       {
+                           "internalType":  "string",
+                           "name":  "_orderCode",
+                           "type":  "string"
+                       },
+                       {
+                           "internalType":  "string",
+                           "name":  "_fromSAP",
+                           "type":  "string"
+                       },
+                       {
+                           "internalType":  "string",
+                           "name":  "_toSAP",
+                           "type":  "string"
+                       },
+                       {
+                           "internalType":  "bytes32",
+                           "name":  "_itemsHash",
+                           "type":  "bytes32"
+                       },
+                       {
+                           "internalType":  "uint256",
+                           "name":  "_totalAmount",
+                           "type":  "uint256"
+                       },
+                       {
+                           "internalType":  "int16",
+                           "name":  "_temperatureAtDispatch",
+                           "type":  "int16"
+                       },
+                       {
+                           "internalType":  "int16",
+                           "name":  "_maxTempThreshold",
+                           "type":  "int16"
+                       }
+                   ],
+        "name":  "createOrder",
+        "outputs":  [
+
+                    ],
+        "stateMutability":  "nonpayable",
+        "type":  "function"
+    },
+    {
+        "inputs":  [
+                       {
+                           "internalType":  "string",
+                           "name":  "_orderCode",
+                           "type":  "string"
+                       }
+                   ],
+        "name":  "getOrder",
+        "outputs":  [
+                        {
+                            "components":  [
+                                               {
+                                                   "internalType":  "string",
+                                                   "name":  "orderCode",
+                                                   "type":  "string"
+                                               },
+                                               {
+                                                   "internalType":  "string",
+                                                   "name":  "fromSAP",
+                                                   "type":  "string"
+                                               },
+                                               {
+                                                   "internalType":  "string",
+                                                   "name":  "toSAP",
+                                                   "type":  "string"
+                                               },
+                                               {
+                                                   "internalType":  "bytes32",
+                                                   "name":  "itemsHash",
+                                                   "type":  "bytes32"
+                                               },
+                                               {
+                                                   "internalType":  "uint256",
+                                                   "name":  "totalAmount",
+                                                   "type":  "uint256"
+                                               },
+                                               {
+                                                   "internalType":  "enum OrderTracking.OrderStatus",
+                                                   "name":  "status",
+                                                   "type":  "uint8"
+                                               },
+                                               {
+                                                   "internalType":  "int16",
+                                                   "name":  "temperatureAtDispatch",
+                                                   "type":  "int16"
+                                               },
+                                               {
+                                                   "internalType":  "int16",
+                                                   "name":  "temperatureAtReceipt",
+                                                   "type":  "int16"
+                                               },
+                                               {
+                                                   "internalType":  "int16",
+                                                   "name":  "maxTempThreshold",
+                                                   "type":  "int16"
+                                               },
+                                               {
+                                                   "internalType":  "bool",
+                                                   "name":  "hasDispute",
+                                                   "type":  "bool"
+                                               },
+                                               {
+                                                   "internalType":  "uint256",
+                                                   "name":  "createdAt",
+                                                   "type":  "uint256"
+                                               },
+                                               {
+                                                   "internalType":  "uint256",
+                                                   "name":  "deliveredAt",
+                                                   "type":  "uint256"
+                                               }
+                                           ],
+                            "internalType":  "struct OrderTracking.Order",
+                            "name":  "",
+                            "type":  "tuple"
+                        }
+                    ],
+        "stateMutability":  "view",
+        "type":  "function"
+    },
+    {
+        "inputs":  [
+                       {
+                           "internalType":  "string",
+                           "name":  "_sapCode",
+                           "type":  "string"
+                       }
+                   ],
+        "name":  "getOrdersByParty",
+        "outputs":  [
+                        {
+                            "internalType":  "string[]",
+                            "name":  "",
+                            "type":  "string[]"
+                        }
+                    ],
+        "stateMutability":  "view",
+        "type":  "function"
+    },
+    {
+        "inputs":  [
+
+                   ],
+        "name":  "userRegistry",
+        "outputs":  [
+                        {
+                            "internalType":  "contract UserRegistry",
+                            "name":  "",
+                            "type":  "address"
+                        }
+                    ],
+        "stateMutability":  "view",
+        "type":  "function"
+    }
+]
