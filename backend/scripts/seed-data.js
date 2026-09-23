@@ -17,18 +17,18 @@ async function main() {
     console.log('Inserting 26 users...');
     const users = [
       // [sap_code, sap_name, role, city, region, wallet_address, drug_license_no, mobile_no]
-      ['SAP-100001', 'TradeChain Admin HQ', 'ADMIN', 'Pune', 'Maharashtra West', '0xA100000000000000000000000000000000000001', 'DL-ADMIN-001', '9800000001'],
-      ['SAP-200001', 'Pune CFA', 'CFA', 'Pune', 'Maharashtra West', '0xC200000000000000000000000000000000000001', 'DL-CFA-001', '9800000002'],
+      ['SAP-100001', 'TradeChain Admin HQ', 'ADMIN', 'Pune', 'Maharashtra West', '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266', 'DL-ADMIN-001', '9800000001'],
+      ['SAP-200001', 'Pune CFA', 'CFA', 'Pune', 'Maharashtra West', '0x70997970C51812dc3A010C7d01b50e0d17dc79C8', 'DL-CFA-001', '9800000002'],
       ['SAP-200002', 'Mumbai CFA', 'CFA', 'Mumbai', 'Maharashtra West', '0xC200000000000000000000000000000000000002', 'DL-CFA-002', '9800000003'],
-      ['SAP-310001', 'Pune Region Distributor', 'DISTRIBUTOR', 'Pune', 'Maharashtra West', '0xD310000000000000000000000000000000000001', 'DL-DIST-001', '9800000004'],
+      ['SAP-310001', 'Pune Region Distributor', 'DISTRIBUTOR', 'Pune', 'Maharashtra West', '0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC', 'DL-DIST-001', '9800000004'],
       ['SAP-310002', 'Mumbai Region Distributor', 'DISTRIBUTOR', 'Mumbai', 'Maharashtra West', '0xD310000000000000000000000000000000000002', 'DL-DIST-002', '9800000005'],
       ['SAP-310003', 'Nashik Region Distributor', 'DISTRIBUTOR', 'Nashik', 'Maharashtra North', '0xD310000000000000000000000000000000000003', 'DL-DIST-003', '9800000006'],
-      ['SAP-410001', 'Pune City Stockist', 'STOCKIST', 'Pune', 'Maharashtra West', '0xE410000000000000000000000000000000000001', 'DL-STK-001', '9800000007'],
+      ['SAP-410001', 'Pune City Stockist', 'STOCKIST', 'Pune', 'Maharashtra West', '0x90F79bf6EB2c4f870365E785982E1f101E93b906', 'DL-STK-001', '9800000007'],
       ['SAP-410002', 'Mumbai Central Stockist', 'STOCKIST', 'Mumbai', 'Maharashtra West', '0xE410000000000000000000000000000000000002', 'DL-STK-002', '9800000008'],
       ['SAP-410003', 'Nashik Central Stockist', 'STOCKIST', 'Nashik', 'Maharashtra North', '0xE410000000000000000000000000000000000003', 'DL-STK-003', '9800000009'],
       ['SAP-410004', 'Pune Suburban Stockist', 'STOCKIST', 'Pune', 'Maharashtra West', '0xE410000000000000000000000000000000000004', 'DL-STK-004', '9800000010'],
       ['SAP-410005', 'Mumbai North Stockist', 'STOCKIST', 'Mumbai', 'Maharashtra West', '0xE410000000000000000000000000000000000005', 'DL-STK-005', '9800000011'],
-      ['SAP-520001', 'HealthFirst Pharmacy, Baner', 'PHARMACY', 'Pune', 'Maharashtra West', '0xF520000000000000000000000000000000000001', 'DL-PH-001', '9800000012'],
+      ['SAP-520001', 'HealthFirst Pharmacy, Baner', 'PHARMACY', 'Pune', 'Maharashtra West', '0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65', 'DL-PH-001', '9800000012'],
       ['SAP-520002', 'MedPlus, Kothrud', 'PHARMACY', 'Pune', 'Maharashtra West', '0xF520000000000000000000000000000000000002', 'DL-PH-002', '9800000013'],
       ['SAP-520003', 'Apollo Pharmacy, Andheri', 'PHARMACY', 'Mumbai', 'Maharashtra West', '0xF520000000000000000000000000000000000003', 'DL-PH-003', '9800000014'],
       ['SAP-520004', 'Wellness Forever, Dadar', 'PHARMACY', 'Mumbai', 'Maharashtra West', '0xF520000000000000000000000000000000000004', 'DL-PH-004', '9800000015'],

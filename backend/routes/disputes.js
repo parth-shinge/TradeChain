@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('../services/db');
 const auth = require('../middleware/auth');
 const requireRole = require('../middleware/requireRole');
+const { raiseDisputeOnChain, resolveDisputeOnChain, rejectDisputeOnChain } = require('../services/blockchain');
 
 router.use(auth);
 
@@ -69,6 +70,32 @@ router.post('/', requireRole(['CFA', 'DISTRIBUTOR', 'STOCKIST', 'PHARMACY']), as
     );
 
     res.status(201).json(insertRes.rows[0]);
+
+    // Fire-and-forget blockchain call
+    const dispute = insertRes.rows[0];
+    // Look up raiser's wallet address for the on-chain call
+    db.query('SELECT wallet_address FROM users WHERE sap_code = $1', [sap_code])
+      .then(async (userRes) => {
+        const raiserAddress = userRes.rows[0]?.wallet_address;
+        if (!raiserAddress) {
+          await db.query('UPDATE disputes SET blockchain_status = $1, blockchain_error = $2 WHERE id = $3', ['FAILED', 'Raiser wallet not found', dispute.id]);
+          return;
+        }
+        return raiseDisputeOnChain(orderCode, reason, evidenceIpfsHash || '', raiserAddress);
+      })
+      .then(async (result) => {
+        if (!result) return;
+        if (result.success) {
+          await db.query('UPDATE disputes SET blockchain_tx_hash = $1, blockchain_status = $2 WHERE id = $3', [result.txHash, 'CONFIRMED', dispute.id]);
+          console.log(`[Chain] Dispute ${dispute.id} confirmed: ${result.txHash}`);
+        } else {
+          await db.query('UPDATE disputes SET blockchain_status = $1, blockchain_error = $2 WHERE id = $3', ['FAILED', result.error, dispute.id]);
+          console.warn(`[Chain] Dispute ${dispute.id} failed: ${result.error}`);
+        }
+      }).catch(async (err) => {
+        await db.query('UPDATE disputes SET blockchain_status = $1, blockchain_error = $2 WHERE id = $3', ['FAILED', err.message, dispute.id]).catch(() => {});
+        console.error(`[Chain] Dispute ${dispute.id} error:`, err.message);
+      });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to create dispute' });
@@ -91,6 +118,21 @@ router.patch('/:id/resolve', requireRole(['ADMIN']), async (req, res) => {
     }
 
     res.json(rows[0]);
+
+    // Fire-and-forget blockchain call
+    resolveDisputeOnChain(id, resolutionNotes || '')
+      .then(async (result) => {
+        if (result.success) {
+          await db.query('UPDATE disputes SET blockchain_tx_hash = $1, blockchain_status = $2 WHERE id = $3', [result.txHash, 'CONFIRMED', id]);
+          console.log(`[Chain] Resolve dispute ${id}: ${result.txHash}`);
+        } else {
+          await db.query('UPDATE disputes SET blockchain_status = $1, blockchain_error = $2 WHERE id = $3', ['FAILED', result.error, id]);
+          console.warn(`[Chain] Resolve dispute ${id} failed: ${result.error}`);
+        }
+      }).catch(async (err) => {
+        await db.query('UPDATE disputes SET blockchain_status = $1, blockchain_error = $2 WHERE id = $3', ['FAILED', err.message, id]).catch(() => {});
+        console.error(`[Chain] Resolve dispute ${id} error:`, err.message);
+      });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to resolve dispute' });
@@ -113,6 +155,21 @@ router.patch('/:id/reject', requireRole(['ADMIN']), async (req, res) => {
     }
 
     res.json(rows[0]);
+
+    // Fire-and-forget blockchain call
+    rejectDisputeOnChain(id, resolutionNotes || '')
+      .then(async (result) => {
+        if (result.success) {
+          await db.query('UPDATE disputes SET blockchain_tx_hash = $1, blockchain_status = $2 WHERE id = $3', [result.txHash, 'CONFIRMED', id]);
+          console.log(`[Chain] Reject dispute ${id}: ${result.txHash}`);
+        } else {
+          await db.query('UPDATE disputes SET blockchain_status = $1, blockchain_error = $2 WHERE id = $3', ['FAILED', result.error, id]);
+          console.warn(`[Chain] Reject dispute ${id} failed: ${result.error}`);
+        }
+      }).catch(async (err) => {
+        await db.query('UPDATE disputes SET blockchain_status = $1, blockchain_error = $2 WHERE id = $3', ['FAILED', err.message, id]).catch(() => {});
+        console.error(`[Chain] Reject dispute ${id} error:`, err.message);
+      });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to reject dispute' });

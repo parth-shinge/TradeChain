@@ -5,6 +5,7 @@ const auth = require('../middleware/auth');
 const requireRole = require('../middleware/requireRole');
 const qrService = require('../services/qr');
 const { validateTemperature } = require('../services/temperature');
+const { createOrderOnChain, confirmDeliveryOnChain } = require('../services/blockchain');
 
 // GET /:orderCode/qr — no auth needed (public QR endpoint)
 router.get('/:orderCode/qr', async (req, res) => {
@@ -58,6 +59,24 @@ router.post('/', requireRole(['ADMIN', 'CFA', 'DISTRIBUTOR', 'STOCKIST']), async
 
     await client.query('COMMIT');
     res.status(201).json(order);
+
+    // Fire-and-forget blockchain call
+    const itemsHash = require('ethers').keccak256(require('ethers').toUtf8Bytes(JSON.stringify(items || [])));
+    createOrderOnChain(
+      orderCode, fromSapCode, toSapCode, itemsHash,
+      totalAmount || 0, temperatureAtDispatch || 0, 8 // default max temp threshold
+    ).then(async (result) => {
+      if (result.success) {
+        await db.query('UPDATE orders SET blockchain_tx_hash = $1, blockchain_status = $2 WHERE id = $3', [result.txHash, 'CONFIRMED', order.id]);
+        console.log(`[Chain] Order ${orderCode} confirmed: ${result.txHash}`);
+      } else {
+        await db.query('UPDATE orders SET blockchain_status = $1, blockchain_error = $2 WHERE id = $3', ['FAILED', result.error, order.id]);
+        console.warn(`[Chain] Order ${orderCode} failed: ${result.error}`);
+      }
+    }).catch(async (err) => {
+      await db.query('UPDATE orders SET blockchain_status = $1, blockchain_error = $2 WHERE id = $3', ['FAILED', err.message, order.id]).catch(() => {});
+      console.error(`[Chain] Order ${orderCode} error:`, err.message);
+    });
   } catch (error) {
     await client.query('ROLLBACK');
     console.error(error);
@@ -118,6 +137,22 @@ router.post('/:orderCode/confirm', async (req, res) => {
 
     await client.query('COMMIT');
     res.json({ message: 'Order confirmed', status: newStatus, temperatureCheck: tempCheck });
+
+    // Fire-and-forget blockchain call
+    const receivedItemsHash = require('ethers').keccak256(require('ethers').toUtf8Bytes(JSON.stringify(items || [])));
+    confirmDeliveryOnChain(orderCode, receivedItemsHash, temperatureAtReceipt || 0)
+      .then(async (result) => {
+        if (result.success) {
+          await db.query('UPDATE orders SET blockchain_tx_hash = $1, blockchain_status = $2 WHERE id = $3', [result.txHash, 'CONFIRMED', order.id]);
+          console.log(`[Chain] Confirm ${orderCode}: ${result.txHash}`);
+        } else {
+          await db.query('UPDATE orders SET blockchain_status = $1, blockchain_error = $2 WHERE id = $3', ['FAILED', result.error, order.id]);
+          console.warn(`[Chain] Confirm ${orderCode} failed: ${result.error}`);
+        }
+      }).catch(async (err) => {
+        await db.query('UPDATE orders SET blockchain_status = $1, blockchain_error = $2 WHERE id = $3', ['FAILED', err.message, order.id]).catch(() => {});
+        console.error(`[Chain] Confirm ${orderCode} error:`, err.message);
+      });
   } catch (error) {
     await client.query('ROLLBACK');
     console.error(error);

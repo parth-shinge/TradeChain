@@ -22,7 +22,8 @@ export default function ProtectedRoute({ children, allowedRoles }) {
   }
 
   if (allowedRoles && !allowedRoles.includes(user.role)) {
-    return <Navigate to="/" replace />;
+    const dashboard = user.role === 'ADMIN' ? '/admin' : `/${user.role.toLowerCase()}`;
+    return <Navigate to={dashboard} replace />;
   }
 
   return children;

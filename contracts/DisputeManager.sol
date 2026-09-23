@@ -64,12 +64,21 @@ contract DisputeManager {
         _;
     }
 
-    modifier onlyRegisteredNonAdmin() {
-        require(userRegistry.isRegistered(msg.sender), "DisputeManager: caller not registered");
-        UserRegistry.User memory u = userRegistry.getUser(msg.sender);
+    modifier onlyRegisteredNonAdmin(address _user) {
+        require(userRegistry.isRegistered(_user), "DisputeManager: raiser not registered");
+        UserRegistry.User memory u = userRegistry.getUser(_user);
         require(
             u.role != userRegistry.ADMIN_ROLE(),
             "DisputeManager: admin cannot raise disputes"
+        );
+        _;
+    }
+
+    modifier onlyAdminOrSelf(address _raiser) {
+        require(
+            msg.sender == _raiser ||
+            userRegistry.hasRole(userRegistry.ADMIN_ROLE(), msg.sender),
+            "DisputeManager: caller must be raiser or admin"
         );
         _;
     }
@@ -81,13 +90,15 @@ contract DisputeManager {
      * @param _orderCode        The order code this dispute is about
      * @param _reason           Reason string (e.g., "QUANTITY_MISMATCH", "COLD_CHAIN_BREAK")
      * @param _evidenceIpfsHash IPFS hash of uploaded evidence (photos, documents)
+     * @param _raiser           Address of the user raising the dispute (admin can relay on behalf)
      * @return disputeId        The auto-incremented dispute ID
      */
     function raiseDispute(
         string calldata _orderCode,
         string calldata _reason,
-        string calldata _evidenceIpfsHash
-    ) external onlyRegisteredNonAdmin returns (uint256) {
+        string calldata _evidenceIpfsHash,
+        address _raiser
+    ) external onlyAdminOrSelf(_raiser) onlyRegisteredNonAdmin(_raiser) returns (uint256) {
         require(bytes(_orderCode).length > 0, "DisputeManager: empty order code");
         require(bytes(_reason).length > 0, "DisputeManager: empty reason");
 
@@ -96,7 +107,7 @@ contract DisputeManager {
         disputes[disputeId] = Dispute({
             disputeId: disputeId,
             orderCode: _orderCode,
-            raisedBy: msg.sender,
+            raisedBy: _raiser,
             reason: _reason,
             evidenceIpfsHash: _evidenceIpfsHash,
             status: DisputeStatus.OPEN,

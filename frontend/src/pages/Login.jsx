@@ -14,7 +14,7 @@ export default function Login() {
   const [wallet, setWallet] = useState(null);
 
   useEffect(() => {
-    if (user?.approved) navigate('/admin');
+    if (user?.approved) navigate(user.role === 'ADMIN' ? '/admin' : `/${user.role.toLowerCase()}`);
     else if (user?.approved === false) setStep(3);
   }, [user, navigate]);
 

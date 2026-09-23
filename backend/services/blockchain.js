@@ -141,11 +141,11 @@ async function getOrderOnChain(orderCode) {
 
 // ──────────────── DisputeManager Functions ────────────────
 
-async function raiseDisputeOnChain(orderCode, reason, evidenceIpfsHash) {
+async function raiseDisputeOnChain(orderCode, reason, evidenceIpfsHash, raiserAddress) {
   const contract = getDisputeManager();
   if (!contract) return { success: false, error: "Contract not configured" };
   try {
-    const tx = await contract.raiseDispute(orderCode, reason, evidenceIpfsHash || "");
+    const tx = await contract.raiseDispute(orderCode, reason, evidenceIpfsHash || "", raiserAddress);
     const receipt = await tx.wait();
     return { success: true, txHash: receipt.hash };
   } catch (err) {
@@ -190,7 +190,21 @@ async function createSchemeOnChain(title, productSAP, validFrom, validTo, termsH
       ethers.keccak256(ethers.toUtf8Bytes(termsHash || ""))
     );
     const receipt = await tx.wait();
-    return { success: true, txHash: receipt.hash };
+    
+    // Parse SchemeCreated event to get the on-chain numeric schemeId
+    let onChainSchemeId = null;
+    const iface = new ethers.Interface(['event SchemeCreated(uint256 indexed schemeId, string title, string productSAP)']);
+    for (const log of receipt.logs) {
+      try {
+        const parsed = iface.parseLog({ topics: log.topics, data: log.data });
+        if (parsed.name === 'SchemeCreated') {
+          onChainSchemeId = Number(parsed.args.schemeId);
+          break;
+        }
+      } catch (e) { /* not this event */ }
+    }
+    
+    return { success: true, txHash: receipt.hash, onChainSchemeId };
   } catch (err) {
     return { success: false, error: err.message };
   }

@@ -118,6 +118,13 @@ export default function OrderDetail() {
       
       <div className="bg-white p-6 rounded-lg shadow">
         <h2 className="text-xl font-bold text-navy mb-4">Blockchain Proof</h2>
+        <div className="flex items-center space-x-3 mb-3">
+          <span className="text-sm font-medium">Status:</span>
+          {order.blockchain_status === 'CONFIRMED' && <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">🟢 Confirmed</span>}
+          {order.blockchain_status === 'PENDING' && <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">🟡 Pending</span>}
+          {order.blockchain_status === 'FAILED' && <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800" title={order.blockchain_error || ''}>🔴 Failed</span>}
+          {!order.blockchain_status && <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">Not synced</span>}
+        </div>
         {order.blockchain_tx_hash ? (
           <div className="flex items-center space-x-4 bg-gray-50 p-4 rounded border">
             <span className="font-mono text-sm text-gray-600 truncate max-w-md">{order.blockchain_tx_hash}</span>
@@ -125,7 +132,7 @@ export default function OrderDetail() {
             <a href={`https://sepolia.etherscan.io/tx/${order.blockchain_tx_hash}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium">View on Etherscan</a>
           </div>
         ) : (
-          <p className="text-gray-500">Not yet synced to blockchain</p>
+          <p className="text-gray-500">Transaction hash not yet available</p>
         )}
       </div>
     </div>

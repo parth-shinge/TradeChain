@@ -29,6 +29,8 @@ export default function Layout({ children }) {
       { name: 'Orders', path: '/orders', icon: TruckIcon },
       { name: 'Dispatch', path: '/orders/create', icon: DocumentArrowUpIcon },
       { name: 'Batch Tracking', path: '/batches', icon: QrCodeIcon },
+      { name: 'Disputes', path: '/disputes', icon: ShieldExclamationIcon },
+      { name: 'Schemes', path: '/schemes', icon: CurrencyDollarIcon },
     ],
     DISTRIBUTOR: [
       { name: 'Dashboard', path: '/distributor', icon: HomeIcon },
@@ -36,12 +38,15 @@ export default function Layout({ children }) {
       { name: 'Dispatch', path: '/orders/create', icon: DocumentArrowUpIcon },
       { name: 'Batch Tracking', path: '/batches', icon: QrCodeIcon },
       { name: 'Disputes', path: '/disputes', icon: ShieldExclamationIcon },
+      { name: 'Schemes', path: '/schemes', icon: CurrencyDollarIcon },
     ],
     STOCKIST: [
       { name: 'Dashboard', path: '/stockist', icon: HomeIcon },
       { name: 'Orders', path: '/orders', icon: TruckIcon },
       { name: 'Dispatch', path: '/orders/create', icon: DocumentArrowUpIcon },
       { name: 'Batch Tracking', path: '/batches', icon: QrCodeIcon },
+      { name: 'Disputes', path: '/disputes', icon: ShieldExclamationIcon },
+      { name: 'Schemes', path: '/schemes', icon: CurrencyDollarIcon },
     ],
     PHARMACY: [
       { name: 'Dashboard', path: '/pharmacy', icon: HomeIcon },

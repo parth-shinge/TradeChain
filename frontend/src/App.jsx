@@ -15,6 +15,8 @@ import OrderDetail from './pages/orders/OrderDetail';
 import CreateOrder from './pages/orders/CreateOrder';
 import ScanConfirm from './pages/scan/ScanConfirm';
 import BatchTracking from './pages/batches/BatchTracking';
+import Disputes from './pages/disputes/Disputes';
+import Schemes from './pages/schemes/Schemes';
 import Placeholder from './pages/Placeholder';
 import { Toaster } from 'react-hot-toast';
 
@@ -43,9 +45,9 @@ function App() {
         <Route path="/scan" element={<ProtectedRoute><Layout><ScanConfirm /></Layout></ProtectedRoute>} />
         <Route path="/batches" element={<ProtectedRoute><Layout><BatchTracking /></Layout></ProtectedRoute>} />
         
-        {/* Phase 5/6 Placeholders */}
-        <Route path="/disputes" element={<ProtectedRoute><Layout><Placeholder name="Disputes" desc="Manage open disputes" phase="5" /></Layout></ProtectedRoute>} />
-        <Route path="/schemes" element={<ProtectedRoute><Layout><Placeholder name="Schemes" desc="View promotional schemes" phase="5" /></Layout></ProtectedRoute>} />
+        {/* Phase 5: Disputes & Schemes */}
+        <Route path="/disputes" element={<ProtectedRoute><Layout><Disputes /></Layout></ProtectedRoute>} />
+        <Route path="/schemes" element={<ProtectedRoute><Layout><Schemes /></Layout></ProtectedRoute>} />
         <Route path="/analytics" element={<ProtectedRoute><Layout><Placeholder name="Analytics" desc="Platform analytics" phase="6" /></Layout></ProtectedRoute>} />
         
         {/* Public Routes */}

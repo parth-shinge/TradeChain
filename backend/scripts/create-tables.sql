@@ -98,6 +98,8 @@ CREATE TABLE IF NOT EXISTS orders (
   delivery_timestamp      TIMESTAMPTZ,
   qr_code_payload         JSONB,
   blockchain_tx_hash      TEXT,
+  blockchain_status       TEXT DEFAULT 'PENDING',
+  blockchain_error        TEXT,
   created_at              TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -126,6 +128,8 @@ CREATE TABLE IF NOT EXISTS disputes (
   status              dispute_status DEFAULT 'OPEN',
   resolution_notes    TEXT,
   blockchain_tx_hash  TEXT,
+  blockchain_status   TEXT DEFAULT 'PENDING',
+  blockchain_error    TEXT,
   created_at          TIMESTAMPTZ DEFAULT NOW(),
   resolved_at         TIMESTAMPTZ
 );
@@ -135,11 +139,15 @@ CREATE TABLE IF NOT EXISTS schemes (
   id                        UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   title                     TEXT NOT NULL,
   product_material_sap_code TEXT,
+  terms                     TEXT,
   valid_from                TIMESTAMPTZ NOT NULL,
   valid_to                  TIMESTAMPTZ NOT NULL,
   terms_hash                TEXT,
   is_active                 BOOLEAN DEFAULT TRUE,
   blockchain_tx_hash        TEXT,
+  blockchain_status         TEXT DEFAULT 'PENDING',
+  blockchain_error          TEXT,
+  blockchain_scheme_id      INTEGER,
   created_at                TIMESTAMPTZ DEFAULT NOW()
 );
 

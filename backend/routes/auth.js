@@ -2,14 +2,29 @@ const express = require('express');
 const router = express.Router();
 const db = require('../services/db');
 const auth = require('../middleware/auth');
+const { ethers } = require('ethers');
 
 // POST /verify
 router.post('/verify', async (req, res) => {
     try {
         const { walletAddress, signature, message } = req.body;
         
-        // Stub signature verification for now
-        // if (!verifySignature(walletAddress, signature, message)) { return res.status(401).json({ error: 'Invalid signature' }); }
+        if (!walletAddress || !signature || !message) {
+            return res.status(400).json({ error: 'Missing authentication fields' });
+        }
+
+        try {
+            // Recover the public address from the signature and the message string
+            const recoveredAddress = ethers.verifyMessage(message, signature);
+            
+            // Compare the recovered address to the claimed address (case-insensitive)
+            if (recoveredAddress.toLowerCase() !== walletAddress.toLowerCase()) {
+                return res.status(401).json({ error: 'Signature verification failed: Address mismatch' });
+            }
+        } catch (err) {
+            console.error('Signature recovery error:', err.message);
+            return res.status(401).json({ error: 'Invalid signature format' });
+        }
         
         const result = await db.query(
             'SELECT * FROM users WHERE wallet_address = $1',

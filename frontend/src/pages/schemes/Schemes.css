@@ -1,0 +1,270 @@
+/* ===================== Schemes Page Styles ===================== */
+
+/* Scheme status badges */
+.scheme-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.scheme-status.active {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #34d399;
+}
+
+.scheme-status.expired {
+  background: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+}
+
+.scheme-status.upcoming {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fbbf24;
+}
+
+/* Scheme card (non-admin view) */
+.scheme-card {
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border: 1px solid #e5e7eb;
+  padding: 1.5rem;
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+
+.scheme-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+
+.scheme-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.scheme-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0D1B2A;
+  line-height: 1.3;
+}
+
+.scheme-card-product {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  background: #f0fdfa;
+  color: #028090;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  border: 1px solid #ccfbf1;
+  margin-bottom: 0.5rem;
+}
+
+.scheme-card-dates {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+}
+
+.scheme-card-terms {
+  font-size: 0.875rem;
+  color: #374151;
+  line-height: 1.6;
+  background: #f8fafc;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #f1f5f9;
+  margin-bottom: 1rem;
+}
+
+.scheme-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.25rem;
+}
+
+/* Create scheme form */
+.scheme-form {
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+}
+
+.scheme-form h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0D1B2A;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.scheme-form label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.35rem;
+}
+
+.scheme-form input,
+.scheme-form select,
+.scheme-form textarea {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.scheme-form input:focus,
+.scheme-form select:focus,
+.scheme-form textarea:focus {
+  outline: none;
+  border-color: #028090;
+  box-shadow: 0 0 0 3px rgba(2, 128, 144, 0.1);
+}
+
+.scheme-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.scheme-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .scheme-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Scheme detail view */
+.scheme-detail-card {
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+}
+
+.scheme-detail-card h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0D1B2A;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+/* Verified badge */
+.verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border: 2px solid #34d399;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  color: #065f46;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  animation: verifyPulse 0.6s ease;
+}
+
+@keyframes verifyPulse {
+  0% { transform: scale(0.9); opacity: 0; }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.verified-badge .checkmark {
+  width: 1.25rem;
+  height: 1.25rem;
+  background: #059669;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.7rem;
+}
+
+/* TX hash display */
+.tx-hash-display {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #f8fafc;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+  margin-top: 0.75rem;
+}
+
+.tx-hash-display .hash {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: #475569;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+/* Verify modal */
+.verify-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 27, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  animation: fadeIn 0.2s ease;
+}
+
+.verify-modal {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  max-width: 480px;
+  width: 90%;
+  padding: 2rem;
+  text-align: center;
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
