@@ -1,0 +1,47 @@
+# ==============================================================================
+# TradeChain — Project Requirements & Dependencies
+# ==============================================================================
+
+# --- System & Runtime Requirements ---
+# Node.js: >= 18.0.0 (Recommended: v20.x LTS)
+# npm: >= 9.0.0
+# PostgreSQL: >= 14.0
+# Solidity: ^0.8.20
+# Hardhat Local Node or EVM-compatible RPC
+
+# --- Smart Contract & Blockchain (Root) ---
+hardhat>=2.29.1
+@nomicfoundation/hardhat-toolbox>=6.1.2
+@openzeppelin/contracts>=5.6.1
+ethers>=6.13.1
+
+# --- Backend API Dependencies (Node.js / Express) ---
+express>=4.19.2
+pg>=8.12.0
+cors>=2.8.5
+helmet>=7.1.0
+dotenv>=16.4.5
+multer>=1.4.5-lts.1
+csv-parser>=3.0.0
+qrcode>=1.5.4
+uuid>=10.0.0
+
+# --- Frontend Application Dependencies (React / Vite) ---
+react>=19.2.8
+react-dom>=19.2.8
+react-router-dom>=7.18.4
+recharts>=3.10.1
+axios>=1.20.0
+@heroicons/react>=2.2.0
+html5-qrcode>=2.3.8
+react-hot-toast>=2.6.1
+tailwindcss>=4.3.3
+@tailwindcss/vite>=4.3.3
+vite>=8.3.0
+
+# --- Optional Python / Analytics Environment (if using Python for AI/ML scripts) ---
+# psycopg2-binary>=2.9.9
+# requests>=2.31.0
+# web3>=6.15.1
+# pandas>=2.2.0
+# python-dotenv>=1.0.1
